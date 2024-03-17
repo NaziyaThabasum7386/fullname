@@ -8,17 +8,21 @@ function App() {
   const [fullName, setFullName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+ const handleSubmit = (event) => {
+  event.preventDefault();
 
-    if (firstName.trim() === '' || lastName.trim() === '') {
-      setErrorMessage('Please fill out this field');
-      setFullName('');
-    } else {
-      setErrorMessage('');
-      setFullName(`${firstName} ${lastName}`);
-    }
-  };
+  if (firstName.trim() === '' && lastName.trim() === '') {
+    setErrorMessage('Please fill out this field');
+    setFullName('');
+  } else if (firstName.trim() === '' || lastName.trim() === '') {
+    setErrorMessage('Please fill out this field');
+    setFullName('');
+  } else {
+    setErrorMessage('');
+    setFullName(`${firstName} ${lastName}`);
+  }
+};
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
