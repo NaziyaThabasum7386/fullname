@@ -1,5 +1,6 @@
 
-import './App.css';import React, { useState } from 'react';
+import './App.css';
+import React, { useState } from 'react';
 
 function App() {
   const [firstName, setFirstName] = useState('');
@@ -11,7 +12,7 @@ function App() {
     event.preventDefault();
 
     if (firstName.trim() === '' || lastName.trim() === '') {
-      setErrorMessage('Both fields are required.');
+      setErrorMessage('Please fill out this field');
       setFullName('');
     } else {
       setErrorMessage('');
@@ -54,7 +55,18 @@ function App() {
         </div>
         <button type="submit">Submit</button>
       </form>
-      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      {errorMessage && <p style={{  position: "absolute",
+            backgroundColor: "white",
+            color: "black",
+            padding: "5px 10px",
+            borderRadius: "5px",
+            borderColor: "black",
+            borderStyle: "solid",
+            borderWidth: "2px",
+            fontSize: "15px",
+            top: "87px",
+            left: "10.6%",
+            transform: "translateX(-50%)" }}>{errorMessage}</p>}
       {fullName && <p>Full Name: {fullName}</p>}
     </div>
   );
