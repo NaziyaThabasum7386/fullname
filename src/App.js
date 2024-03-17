@@ -1,62 +1,63 @@
 
-import './App.css';
-import { useState } from "react";
+import './App.css';import React, { useState } from 'react';
 
-export default function App() {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [fullname, setFullname] = useState("");
-  const [showTooltip, setShowTooltip] = useState(false);
+function App() {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handle = (e) => {
-    e.preventDefault();
-    if (firstname && lastname !== "") {
-      setFullname(firstname + " " + lastname);
-      setShowTooltip(false); // Clear error if both fields are filled
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (firstName.trim() === '' || lastName.trim() === '') {
+      setErrorMessage('Both fields are required.');
+      setFullName('');
     } else {
-      setFullname(" ");
-      setShowTooltip(true);
+      setErrorMessage('');
+      setFullName(`${firstName} ${lastName}`);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    if (name === 'firstName') {
+      setFirstName(value);
+    } else {
+      setLastName(value);
     }
   };
 
   return (
     <div>
-      <h1>Full Name Display</h1>
-      <h3>
-        First Name:{" "}
-        <input
-          vlaue={firstname}
-          onChange={(e) => setFirstname(e.target.value)}
-        />
-      </h3>
-      <h3>
-        Last Name:{" "}
-        <input value={lastname} onChange={(e) => setLastname(e.target.value)} />
-      </h3>
-      <form onSubmit={handle}>
+      <h1>React Form</h1>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="firstName">First Name:</label>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            value={firstName}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="lastName">Last Name:</label>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            value={lastName}
+            onChange={handleChange}
+          />
+        </div>
         <button type="submit">Submit</button>
       </form>
-      <h3> full name: {fullname}</h3>
-      {showTooltip && (
-        <div
-          style={{
-            position: "absolute",
-            backgroundColor: "white",
-            color: "black",
-            padding: "5px 10px",
-            borderRadius: "5px",
-            borderColor: "black",
-            borderStyle: "solid",
-            borderWidth: "2px",
-            fontSize: "15px",
-            top: "103px",
-            left: "29%",
-            transform: "translateX(-50%)",
-          }}
-        >
-          Please fill out this field
-        </div>
-      )}
+      {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+      {fullName && <p>Full Name: {fullName}</p>}
     </div>
   );
 }
+
+export default App;
