@@ -31,7 +31,7 @@ function App() {
 
   return (
     <div>
-      <h1>React Form</h1>
+      <h1>Full Name Display</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="firstName">First Name:</label>
