@@ -1,28 +1,31 @@
-
 import './App.css';
 import React, { useState } from 'react';
+import { SnackbarProvider, useSnackbar } from 'notistack';
+
+function MyApp() {
+  return (
+    <SnackbarProvider maxSnack={3}>
+      <App />
+    </SnackbarProvider>
+  );
+}
 
 function App() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [fullName, setFullName] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const { enqueueSnackbar } = useSnackbar();
 
- const handleSubmit = (event) => {
-  event.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-  if (firstName.trim() === '' && lastName.trim() === '') {
-    setErrorMessage('Please fill out this field');
-    setFullName('');
-  } else if (firstName.trim() === '' || lastName.trim() === '') {
-    setErrorMessage('Please fill out this field');
-    setFullName('');
-  } else {
-    setErrorMessage('');
-    setFullName(`${firstName} ${lastName}`);
-  }
-};
-
+    if (firstName.trim() === '' || lastName.trim() === '') {
+      enqueueSnackbar('Please fill out all fields', { variant: 'warning' });
+      setFullName('');
+    } else {
+      setFullName(`${firstName} ${lastName}`);
+    }
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -59,21 +62,9 @@ function App() {
         </div>
         <button type="submit">Submit</button>
       </form>
-      {errorMessage && <p style={{  position: "absolute",
-            backgroundColor: "white",
-            color: "black",
-            padding: "5px 10px",
-            borderRadius: "5px",
-            borderColor: "black",
-            borderStyle: "solid",
-            borderWidth: "2px",
-            fontSize: "15px",
-            top: "87px",
-            left: "10.6%",
-            transform: "translateX(-50%)" }}>{errorMessage}</p>}
       {fullName && <p>Full Name: {fullName}</p>}
     </div>
   );
 }
 
-export default App;
+export default MyApp;
